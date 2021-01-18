@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.javen.dao.RoomDao" >
+  <resultMap id="BaseResultMap" type="com.javen.model.Room" >
+    <id      column="id"        property="id"        jdbcType="INTEGER" />
+    <result  column="roomNum"  property="roomNum"  jdbcType="INTEGER" />
+    <result  column="roomState"  property="roomState"  jdbcType="VARCHAR" />
+    <result  column="userName"  property="userName"  jdbcType="VARCHAR" />
+    <result  column="phoneNumber"  property="phoneNumber"  jdbcType="VARCHAR" />
+    <result  column="idCard"  property="idCard"  jdbcType="VARCHAR" />
+    <result  column="roomTime"  property="roomTime"  jdbcType="VARCHAR" />
+    <result  column="endTime"  property="endTime"  jdbcType="VARCHAR" />
+    <result  column="haveTime"  property="haveTime"  jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="UserResultMap" type="com.javen.model.User" >
+    <id      column="id"        property="id"        jdbcType="INTEGER" />
+    <result  column="userName"  property="userName"  jdbcType="VARCHAR" />
+    <result  column="password"  property="password"  jdbcType="VARCHAR" />
+    <result  column="phoneNumber"  property="phoneNumber"  jdbcType="VARCHAR" />
+    <result  column="idCard"  property="idCard"  jdbcType="VARCHAR" />
+    <result  column="bookedRoom"  property="bookedRoom"  jdbcType="VARCHAR" />
+    <result  column="havaTime"  property="havaTime"  jdbcType="VARCHAR" />
+    <result  column="roomTime"  property="roomTime"  jdbcType="VARCHAR" />
+    <result  column="endTime"  property="endTime"  jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+   	id,roomNum,roomState,userName,phoneNumber,idCard,roomTime,endTime,haveTime
+  </sql>
+  
+  <sql id="User_Cilumn_List"></sql>
+
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select 
+    <include refid="Base_Column_List" />
+    from room limit #{0}, #{1};
+  </select>
+  
+  <update id="resetTimeOut" parameterType="java.lang.String">
+  	update room set roomState=0, userName=null, phoneNumber=null, idCard = null, roomTime = null, endTime = null, haveTime = null
+  	<![CDATA[where endTime < #{0}]]>;
+  	update user set bookedRoom = null, havaTime = null, roomTime = null, endTime = null
+  	<![CDATA[where endTime < #{0}]]>;
+  </update>
+
+  <select id="selectCount" resultType="java.lang.Integer">
+  	select count(*) from room;
+  </select>
+
+  <delete id="deleteRoomById" parameterType="java.lang.Integer">
+  	delete from room where id = #{0} and roomState = 0;
+  </delete>
+  
+  <insert id="addRoom" parameterType="java.lang.Integer">
+  	insert into room (roomNum, roomState) values (#{0}, 0);
+  </insert>
+
+  <select id="selectUserById" resultMap="UserResultMap" parameterType="java.lang.Integer">
+  	select * from user where id = #{0};
+  </select>
+    
+  <select id="selectRoomByRoomNum" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+  	select <include refid="Base_Column_List" /> from room where roomNum = #{0};
+  </select>
+  
+  <update id="bookRoom" parameterType="Map">
+  	update user set BookedRoom = #{roomNum}, roomTime = #{roomTime}, endTime=#{endTime} where id = #{userId};
+  	update room set roomState = 1, userName = #{userName}, phoneNumber = #{phoneNumber}, idcard = #{idcard}, roomTime = #{roomTime}, endTime = #{endTime} where roomNum = #{roomNum};
+  </update>
+
+  <update id="checkIn" parameterType="Map">
+  	update user set endTime=#{endTime} where phoneNumber = #{phoneNumber};
+  	update room set roomState = 2, endTime=#{endTime} where roomNum = #{roomNum};
+  </update>
+
+</mapper>
