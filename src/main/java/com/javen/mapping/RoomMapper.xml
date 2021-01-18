@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.javen.dao.RoomDao" >
+  <resultMap id="BaseResultMap" type="com.javen.model.Room" >
+    <id      column="id"        property="id"        jdbcType="INTEGER" />
+    <result  column="roomNum"  property="roomNum"  jdbcType="INTEGER" />
+    <result  column="roomState"  property="roomState"  jdbcType="VARCHAR" />
+    <result  column="userName"  property="userName"  jdbcType="VARCHAR" />
+    <result  column="phoneNumber"  property="phoneNumber"  jdbcType="VARCHAR" />
+    <result  column="idCard"  property="idCard"  jdbcType="VARCHAR" />
+    <result  column="roomTime"  property="roomTime"  jdbcType="VARCHAR" />
+    <result  column="endTime"  property="endTime"  jdbcType="VARCHAR" />
+    <result  column="haveTime"  property="haveTime"  jdbcType="VARCHAR" />
+  </resultMap>
+  
+  
+  <sql id="Base_Column_List" >
+   	id,roomNum,roomState,userName,phoneNumber,idCard,roomTime,endTime,haveTime
+  </sql>
+
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select 
+    <include refid="Base_Column_List" />
+    from room limit #{0}, #{1}
+  </select>
+  
+  <update id="resetTimeOut" parameterType="java.lang.String">
+  	update room set roomState=0, userName=null, phoneNumber=null, idCard = null, roomTime = null, endTime = null, haveTime = null
+  	<![CDATA[where endTime < #{0}]]>;
+  	update user set bookedRoom = null, havaTime = null, roomTime = null, endTime = null
+  	<![CDATA[where endTime < #{0}]]>;
+  </update>
+
+ <!-- 
+  <select id="SelectCount" resultType="java.lang.Integer">
+  	select count(*) from room
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select 
+    <include refid="Base_Column_List" />
+    from login
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+     <delete id="deleteByPrimaryKey"  parameterType="java.lang.Integer">
+    delete from login
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+   <insert id="insert" parameterType="com.javen.model.Login" >
+    insert into login (loginNum, userName, password, phoneNumber, idcard, sex)
+    values (#{loginNum,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=INTEGER}, #{idcard,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR})
+   </insert>
+  
+   <update id="updateByPrimaryKey"  parameterType="com.javen.model.Login" >
+    update login
+    set userName = #{userName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR}
+      where id = #{id,jdbcType=INTEGER}
+  </update>
+  -->  
+
+
+</mapper>
