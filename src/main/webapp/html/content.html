@@ -79,11 +79,11 @@
             var table = layui.table;
             function reloadTable(){
             	  layui.table.reload('test', {
-            			url: 'http://localhost:8080/maven01/room/selectAll'
+            			url: 'http://localhost:8080/maven00/room/selectAll'
             		});
               }
               function deleteById(id){
-              	var url = "http://localhost:8080/maven01/room/deleteById";
+              	var url = "http://localhost:8080/maven00/room/deleteById";
               	$.ajax({
               	    type: "post", //指定提交的类型 get对应 doGet()方法，post--->doPost()犯法
               	    url: url,    //传输地址的URL
@@ -107,7 +107,7 @@
           		form.on('submit(demo2)', function(data){
           		    console.log(JSON.stringify(data.field));
           		    $.ajax({   
-          	           url:'http://localhost:8080/maven01/room/addRoom',       
+          	           url:'http://localhost:8080/maven00/room/addRoom',       
           	           method:'post',
           	          
           	           data:data.field,        
@@ -137,7 +137,7 @@
           		form.on('submit(demo3)', function(data){
           			console.log(JSON.stringify(data.field));
           			$.ajax({   
-          			     url:'http://localhost:8080/maven01/room/bookRoom',       
+          			     url:'http://localhost:8080/maven00/room/bookRoom',       
           			     method:'post',
           			     data:data.field,        
           			     dataType:'JSON',  
@@ -163,7 +163,7 @@
               
               function page() {
                   $.ajax({
-                      url: 'http://localhost:8080/maven01/room/selectCount',
+                      url: 'http://localhost:8080/maven00/room/selectCount',
                       dataType: 'json',
                       type: 'get',
                       async: false,
@@ -178,7 +178,7 @@
             console.log(pagecount);
             table.render({
                 elem: '#test'
-                , url: 'http://localhost:8080/maven01/room/selectAll'
+                , url: 'http://localhost:8080/maven00/room/selectAll'
                 , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
                 , defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
                     title: '提示'
@@ -309,7 +309,7 @@
      	 	}
             
             function checkIn(data){
-            	var url = "http://localhost:8080/maven01/room/checkIn";
+            	var url = "http://localhost:8080/maven00/room/checkIn";
             	var json = {
             			"roomNum":data.roomNum,
             			"phoneNumber":data.phoneNumber,
@@ -333,7 +333,7 @@
             }
             
             function checkOut(data) {
-            	var url = "http://localhost:8080/maven01/room/checkIn";
+            	var url = "http://localhost:8080/maven00/room/checkIn";
             	var json = {
             			"roomNum":data.roomNum,
             			"phoneNumber":data.phoneNumber,
