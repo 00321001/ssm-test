@@ -38,6 +38,10 @@
   <delete id="deleteRoomById" parameterType="java.lang.Integer">
   	delete from room where id = #{0} and roomState = 0;
   </delete>
+  
+  <insert id="addRoom" parameterType="java.lang.Integer">
+  	insert into room (roomNum, roomState) values (#{0}, 0);
+  </insert>
  <!-- 
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">

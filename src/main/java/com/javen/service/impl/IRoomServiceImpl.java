@@ -50,4 +50,11 @@ public class IRoomServiceImpl implements IRoomService{
 		// TODO Auto-generated method stub
 		return this.roomDao.deleteRoomById(id);
 	}
+
+	public int addRoom(Integer roomNum) {
+		// TODO Auto-generated method stub
+		return this.roomDao.addRoom(roomNum);
+	}
+	
+	
 }

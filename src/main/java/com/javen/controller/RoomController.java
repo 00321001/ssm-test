@@ -62,4 +62,21 @@ public class RoomController {
 		}
 		return data;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/addRoom", method=RequestMethod.GET,produces = "text/plain;charset=utf-8")
+	public String addRoom(HttpServletRequest request) throws Exception{
+		request.setCharacterEncoding("utf-8");
+		Integer roomNum = Integer.parseInt(request.getParameter("roomNum"));
+		String data = "{\"data\":\"";
+		try {
+			roomService.addRoom(roomNum);
+			data += "新增成功\"}";
+		} catch (Exception e) {
+			data += "新增失败\"}";
+		}
+		return data;
+	}
+	
+	
 }

@@ -8,4 +8,5 @@ public interface IRoomService {
 	public List<Room> selectAll(Integer pageIndex, Integer pageSize) throws Exception;
 	public int selectCount();
 	public int deleteRoomById(Integer id);
+	public int addRoom(Integer roomNum);
 }

@@ -9,4 +9,5 @@ public interface RoomDao {
 	int resetTimeOut(String dateTime);
 	int selectCount();
 	int deleteRoomById(Integer id);
+	int addRoom(Integer roomNum);
 }
