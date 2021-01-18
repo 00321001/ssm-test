@@ -1,6 +1,5 @@
 package com.javen.service.impl;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -45,5 +44,10 @@ public class IRoomServiceImpl implements IRoomService{
 	public int selectCount() {
 		// TODO Auto-generated method stub
 		return this.roomDao.selectCount();
+	}
+
+	public int deleteRoomById(Integer id) {
+		// TODO Auto-generated method stub
+		return this.roomDao.deleteRoomById(id);
 	}
 }

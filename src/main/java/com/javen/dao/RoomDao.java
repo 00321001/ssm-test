@@ -8,4 +8,5 @@ public interface RoomDao {
 	List<Room> selectAll(Integer startIndex, Integer pageSize);
 	int resetTimeOut(String dateTime);
 	int selectCount();
+	int deleteRoomById(Integer id);
 }

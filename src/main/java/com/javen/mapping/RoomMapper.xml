@@ -35,6 +35,9 @@
   	select count(*) from room;
   </select>
 
+  <delete id="deleteRoomById" parameterType="java.lang.Integer">
+  	delete from room where id = #{0} and roomState = 0;
+  </delete>
  <!-- 
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">

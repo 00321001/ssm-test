@@ -24,7 +24,7 @@ public class RoomController {
 	
 	@ResponseBody
     @RequestMapping(value="/selectAll", method=RequestMethod.GET,produces = "text/plain;charset=utf-8")  
-    public String selectById(HttpServletRequest request) throws Exception{  
+    public String selectAll(HttpServletRequest request) throws Exception{  
     	request.setCharacterEncoding("utf-8");  
     	String pageString = request.getParameter("page");
     	String limitString = request.getParameter("limit");
@@ -46,5 +46,20 @@ public class RoomController {
         return data; 
     }
 	
-	
+	@ResponseBody
+	@RequestMapping(value="/deleteById", method=RequestMethod.POST,produces = "text/plain;charset=utf-8")
+	public String deleteById(HttpServletRequest request) throws Exception{
+		request.setCharacterEncoding("utf-8");
+		Integer id = Integer.parseInt(request.getParameter("id"));
+		int flag = roomService.deleteRoomById(id);
+		String data = "{\"data\":\"";
+		if(flag == 0) {
+			data += "删除失败\"}";
+		}else if(flag == 1){
+			data += "删除成功\"}";
+		}else {
+			data += "未知错误\"}";
+		}
+		return data;
+	}
 }
