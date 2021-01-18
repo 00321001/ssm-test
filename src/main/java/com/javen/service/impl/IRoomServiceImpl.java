@@ -2,6 +2,7 @@ package com.javen.service.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.javen.dao.RoomDao;
 import com.javen.model.Room;
+import com.javen.model.User;
 import com.javen.service.IRoomService;
 
 @Service
@@ -54,6 +56,51 @@ public class IRoomServiceImpl implements IRoomService{
 	public int addRoom(Integer roomNum) {
 		// TODO Auto-generated method stub
 		return this.roomDao.addRoom(roomNum);
+	}
+
+	public int bookRoom(Integer userId, Integer roomNum, String roomTime) {
+		// TODO Auto-generated method stub
+		Room room = this.roomDao.selectRoomByRoomNum(roomNum);
+		User user = this.roomDao.selectUserById(userId);
+		if(user.getBookedRoom() == null || user.getBookedRoom() == "") {
+			if(room.getRoomState().equals("0")) {
+				Date date = new Date();
+				long endTime = date.getTime();
+				endTime += 1000*3600*3;
+				SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				date.setTime(endTime);
+				String endTimeStr = simpleFormat.format(date);
+				HashMap<String, String> map = new HashMap<String, String>();
+				map.put("userId", userId.toString());
+				map.put("roomNum", roomNum.toString());
+				map.put("roomTime", roomTime);
+				map.put("userName", user.getUserName());
+				map.put("phoneNumber", user.getPhoneNumber());
+				map.put("idcard", user.getUserName());
+				map.put("endTime", endTimeStr);
+				System.out.println(this.roomDao.bookRoom(map));
+			}else {
+				return 2;
+			}
+		}else {
+			return 1;
+		}
+		return 0;
+	}
+
+	public int checkIn(String phoneNumber, Integer roomNum, String roomTime) {
+		// TODO Auto-generated method stub
+		Date date = new Date();
+		long endTime = date.getTime();
+		endTime += 1000*3600*24*Integer.valueOf(roomTime);
+		SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		date.setTime(endTime);
+		String endTimeStr = simpleFormat.format(date);
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("phoneNumber", phoneNumber);
+		map.put("roomNum", roomNum.toString());
+		map.put("endTime", endTimeStr);
+		return this.roomDao.checkIn(map);
 	}
 	
 	

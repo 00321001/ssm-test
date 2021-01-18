@@ -9,4 +9,6 @@ public interface IRoomService {
 	public int selectCount();
 	public int deleteRoomById(Integer id);
 	public int addRoom(Integer roomNum);
+	public int bookRoom(Integer userId, Integer roomNum, String roomTime);
+	public int checkIn(String phoneNumber, Integer roomNum, String roomTime);
 }

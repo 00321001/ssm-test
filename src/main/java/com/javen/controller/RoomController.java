@@ -64,7 +64,7 @@ public class RoomController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/addRoom", method=RequestMethod.GET,produces = "text/plain;charset=utf-8")
+	@RequestMapping(value="/addRoom", method=RequestMethod.POST,produces = "text/plain;charset=utf-8")
 	public String addRoom(HttpServletRequest request) throws Exception{
 		request.setCharacterEncoding("utf-8");
 		Integer roomNum = Integer.parseInt(request.getParameter("roomNum"));
@@ -73,10 +73,46 @@ public class RoomController {
 			roomService.addRoom(roomNum);
 			data += "新增成功\"}";
 		} catch (Exception e) {
+			e.printStackTrace();
 			data += "新增失败\"}";
 		}
 		return data;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/bookRoom", method=RequestMethod.GET,produces = "text/plain;charset=utf-8")
+	public String bookRoom(HttpServletRequest request) throws Exception{
+		request.setCharacterEncoding("utf-8");
+		Integer roomNum = Integer.parseInt(request.getParameter("roomNum"));
+		Integer userId = Integer.parseInt(request.getParameter("userId"));
+		String roomTime = request.getParameter("roomTime");
+		int flag = roomService.bookRoom(userId, roomNum, roomTime);
+		String data = "{\"data\":\"";
+		if(flag == 0) {
+			data += "预定成功\"}";
+		}else if(flag == 1){
+			data += "用户已有预定或入住房间\"}";
+		}else if(flag == 2) {
+			data += "该房间已被预定或入住\"}";
+		}
+		return data;
+	}
 	
+	@ResponseBody
+	@RequestMapping(value="/checkIn", method=RequestMethod.GET,produces = "text/plain;charset=utf-8")
+	public String checkIn(HttpServletRequest request) throws Exception{
+		request.setCharacterEncoding("utf-8");
+		String phoneNumber = request.getParameter("phoneNumber");
+		Integer roomNum = Integer.parseInt(request.getParameter("roomNum"));
+		String roomTime = request.getParameter("roomTime");
+		String data = "{\"data\":\"";
+		try {
+			roomService.checkIn(phoneNumber, roomNum, roomTime);
+			data += "操作成功\"}";
+		} catch (Exception e) {
+			e.printStackTrace();
+			data += "操作失败\"}";
+		}
+		return data;
+	}
 }

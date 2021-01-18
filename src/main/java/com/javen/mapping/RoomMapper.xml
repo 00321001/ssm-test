@@ -13,10 +13,23 @@
     <result  column="haveTime"  property="haveTime"  jdbcType="VARCHAR" />
   </resultMap>
   
+  <resultMap id="UserResultMap" type="com.javen.model.User" >
+    <id      column="id"        property="id"        jdbcType="INTEGER" />
+    <result  column="userName"  property="userName"  jdbcType="VARCHAR" />
+    <result  column="password"  property="password"  jdbcType="VARCHAR" />
+    <result  column="phoneNumber"  property="phoneNumber"  jdbcType="VARCHAR" />
+    <result  column="idCard"  property="idCard"  jdbcType="VARCHAR" />
+    <result  column="bookedRoom"  property="bookedRoom"  jdbcType="VARCHAR" />
+    <result  column="havaTime"  property="havaTime"  jdbcType="VARCHAR" />
+    <result  column="roomTime"  property="roomTime"  jdbcType="VARCHAR" />
+    <result  column="endTime"  property="endTime"  jdbcType="VARCHAR" />
+  </resultMap>
   
   <sql id="Base_Column_List" >
    	id,roomNum,roomState,userName,phoneNumber,idCard,roomTime,endTime,haveTime
   </sql>
+  
+  <sql id="User_Cilumn_List"></sql>
 
   <select id="selectAll" resultMap="BaseResultMap" parameterType="java.lang.Integer">
     select 
@@ -42,31 +55,23 @@
   <insert id="addRoom" parameterType="java.lang.Integer">
   	insert into room (roomNum, roomState) values (#{0}, 0);
   </insert>
- <!-- 
 
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-    select 
-    <include refid="Base_Column_List" />
-    from login
-    where id = #{id,jdbcType=INTEGER}
+  <select id="selectUserById" resultMap="UserResultMap" parameterType="java.lang.Integer">
+  	select * from user where id = #{0};
   </select>
-     <delete id="deleteByPrimaryKey"  parameterType="java.lang.Integer">
-    delete from login
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
+    
+  <select id="selectRoomByRoomNum" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+  	select <include refid="Base_Column_List" /> from room where roomNum = #{0};
+  </select>
   
-   <insert id="insert" parameterType="com.javen.model.Login" >
-    insert into login (loginNum, userName, password, phoneNumber, idcard, sex)
-    values (#{loginNum,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=INTEGER}, #{idcard,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR})
-   </insert>
-  
-   <update id="updateByPrimaryKey"  parameterType="com.javen.model.Login" >
-    update login
-    set userName = #{userName,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR}
-      where id = #{id,jdbcType=INTEGER}
+  <update id="bookRoom" parameterType="Map">
+  	update user set BookedRoom = #{roomNum}, roomTime = #{roomTime}, endTime=#{endTime} where id = #{userId};
+  	update room set roomState = 1, userName = #{userName}, phoneNumber = #{phoneNumber}, idcard = #{idcard}, roomTime = #{roomTime}, endTime = #{endTime} where roomNum = #{roomNum};
   </update>
-  -->  
 
+  <update id="checkIn" parameterType="Map">
+  	update user set endTime=#{endTime} where phoneNumber = #{phoneNumber};
+  	update room set roomState = 2, endTime=#{endTime} where roomNum = #{roomNum};
+  </update>
 
 </mapper>
