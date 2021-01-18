@@ -1,0 +1,33 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Qingcheng</title>
+<link rel="stylesheet" href="sources/css/mystyle.css" />
+<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+<script src="sources/js/jquery.js"></script>
+</head>
+<body class="body_bg">
+	<div class="whole">
+		<div class="title">Please Enter Your New Password</div>
+		<form id="form1" action="http://localhost:8080/maven00/login/test" method="get" class="form_box">
+			<div class="input_tit">Your Account</div>
+			<div class="input_box">
+				<input class="input_self" type="text" name="username" id="username"/>
+			</div>
+			<div class='blank_30'></div>
+			<div class="input_tit">New Password</div>
+			<div class="input_box">
+				<input class="input_self" type="text" name="password" id="password" />
+			</div>
+			<div class="input_tit">Confirm Your New Password</div>
+			<div class="input_box">
+				<input class="input_self" type="text" name="id" id="id" value="提交" />
+			</div>
+			<div class="finish_box">
+				<input class="finish_btn" type="submit" id="finish" name="finish"  onclick="select()"/>
+			</div>
+		</form>
+	</div>
+</body>
+
+</html>
