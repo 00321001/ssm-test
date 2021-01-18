@@ -21,7 +21,7 @@
   <select id="selectAll" resultMap="BaseResultMap" parameterType="java.lang.Integer">
     select 
     <include refid="Base_Column_List" />
-    from room limit #{0}, #{1}
+    from room limit #{0}, #{1};
   </select>
   
   <update id="resetTimeOut" parameterType="java.lang.String">
@@ -31,10 +31,12 @@
   	<![CDATA[where endTime < #{0}]]>;
   </update>
 
- <!-- 
-  <select id="SelectCount" resultType="java.lang.Integer">
-  	select count(*) from room
+  <select id="selectCount" resultType="java.lang.Integer">
+  	select count(*) from room;
   </select>
+
+ <!-- 
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
     select 
     <include refid="Base_Column_List" />

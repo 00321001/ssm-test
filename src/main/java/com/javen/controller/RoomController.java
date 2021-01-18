@@ -33,8 +33,18 @@ public class RoomController {
       	String[] colums = {"id","roomNum","roomState","userName", "phoneNumber", "idCard", "roomTime", "endTime", "haveTime" };
     	String data = ObjtoLayJson.ListtoJson(logins, colums);
     	System.out.println(data);
-    	
         return data; 
-
     }
+	
+	@ResponseBody
+    @RequestMapping(value="/selectCount", method=RequestMethod.GET,produces = "text/plain;charset=utf-8")  
+    public String selectCount(HttpServletRequest request) throws Exception{  
+    	request.setCharacterEncoding("utf-8");
+    	int count = roomService.selectCount();
+    	String data = "{\"count\":"+count+"}";
+    	System.out.println(data);
+        return data; 
+    }
+	
+	
 }

@@ -41,4 +41,9 @@ public class IRoomServiceImpl implements IRoomService{
 		}
 		return re;
 	}
+
+	public int selectCount() {
+		// TODO Auto-generated method stub
+		return this.roomDao.selectCount();
+	}
 }
