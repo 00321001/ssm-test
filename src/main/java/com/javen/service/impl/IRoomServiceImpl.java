@@ -60,8 +60,15 @@ public class IRoomServiceImpl implements IRoomService{
 
 	public int bookRoom(Integer userId, Integer roomNum, String roomTime) {
 		// TODO Auto-generated method stub
+		
 		Room room = this.roomDao.selectRoomByRoomNum(roomNum);
 		User user = this.roomDao.selectUserById(userId);
+		if(user == null) {
+			return 3;
+		}
+		if(roomTime == "" || roomTime == null) {
+			return 4;
+		}
 		if(user.getBookedRoom() == null || user.getBookedRoom() == "") {
 			if(room.getRoomState().equals("0")) {
 				Date date = new Date();

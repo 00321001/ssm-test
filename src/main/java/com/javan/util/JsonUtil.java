@@ -53,7 +53,7 @@ public class JsonUtil {
             if (tmp != null) {
                 str = tmp.toString();
             } else {
-                str = "NULL";
+                str = "";
             }
             //转义数据中的双引号，防止破坏json格式
             if (str.contains("\"")) {

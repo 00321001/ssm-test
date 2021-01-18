@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.javan.util.JsonUtil;
 import com.javan.util.ObjtoLayJson;
 import com.javen.model.Room;
 import com.javen.service.IRoomService;
@@ -29,9 +30,9 @@ public class RoomController {
     	String pageString = request.getParameter("page");
     	String limitString = request.getParameter("limit");
     	System.out.println(pageString + " "+limitString);
-    	List<Room> logins = roomService.selectAll(Integer.parseInt(pageString), Integer.parseInt(limitString));
+    	List<Room> rooms = roomService.selectAll(Integer.parseInt(pageString), Integer.parseInt(limitString));
       	String[] colums = {"id","roomNum","roomState","userName", "phoneNumber", "idCard", "roomTime", "endTime", "haveTime" };
-    	String data = ObjtoLayJson.ListtoJson(logins, colums);
+    	String data = JsonUtil.listToLayJson(colums, rooms);
     	System.out.println(data);
         return data; 
     }
@@ -80,7 +81,7 @@ public class RoomController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/bookRoom", method=RequestMethod.GET,produces = "text/plain;charset=utf-8")
+	@RequestMapping(value="/bookRoom", method=RequestMethod.POST,produces = "text/plain;charset=utf-8")
 	public String bookRoom(HttpServletRequest request) throws Exception{
 		request.setCharacterEncoding("utf-8");
 		Integer roomNum = Integer.parseInt(request.getParameter("roomNum"));
@@ -94,12 +95,16 @@ public class RoomController {
 			data += "用户已有预定或入住房间\"}";
 		}else if(flag == 2) {
 			data += "该房间已被预定或入住\"}";
+		}else if(flag == 3) {
+			data += "无此用户\"}";
+		}else if(flag == 4) {
+			data += "请填写所有字段\"}";
 		}
 		return data;
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/checkIn", method=RequestMethod.GET,produces = "text/plain;charset=utf-8")
+	@RequestMapping(value="/checkIn", method=RequestMethod.POST,produces = "text/plain;charset=utf-8")
 	public String checkIn(HttpServletRequest request) throws Exception{
 		request.setCharacterEncoding("utf-8");
 		String phoneNumber = request.getParameter("phoneNumber");
