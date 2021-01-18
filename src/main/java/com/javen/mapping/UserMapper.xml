@@ -60,6 +60,15 @@
       roomTime = null,
       endTime = null
     <![CDATA[where endTime < #{0}]]>;
+    update room
+    set roomState = 0,
+      userName = null,
+      phoneNumber = null,
+      idCard = null,
+      roomTime = null,
+      endTime = null,
+      haveTime = null
+    <![CDATA[where endTime < #{0}]]>;
   </update>
 
 </mapper>
