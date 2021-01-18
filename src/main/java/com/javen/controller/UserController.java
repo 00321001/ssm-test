@@ -31,17 +31,17 @@ public class UserController {
 	public String test(HttpServletRequest request, Model model) {
 		return "back";
 	}
-	
+
 	@ResponseBody
-	@RequestMapping(value = "/deleteById", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
-	public String deleteById(HttpServletRequest request) {
+	@RequestMapping(value = "/delete", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
+	public String delete(HttpServletRequest request) {
 		String idString = request.getParameter("id");
 		Integer id = Integer.valueOf(idString);
 		int flag = userService.deleteById(id);
 		String data;
-		if(flag == 1) {
+		if (flag == 1) {
 			data = "{\"data\":\"删除成功\"}";
-		}else {
+		} else {
 			data = "{\"data\":\"删除失败\"}";
 		}
 		return data;
@@ -63,9 +63,9 @@ public class UserController {
 		int flag = userService.signUp(user);
 		// 给前台返回的东西
 		String data;
-		if(flag == 1) {
+		if (flag == 1) {
 			data = "{\"data\":\"注册成功\"}";
-		}else {
+		} else {
 			data = "{\"data\":\"注册失败\"}";
 		}
 		return data;
@@ -90,9 +90,9 @@ public class UserController {
 		int flag = userService.updateById(user);
 		// 给前台返回的东西
 		String data;
-		if(flag == 1) {
+		if (flag == 1) {
 			data = "{\"data\":\"修改成功\"}";
-		}else {
+		} else {
 			data = "{\"data\":\"修改失败\"}";
 		}
 		return data;
@@ -105,13 +105,12 @@ public class UserController {
 		request.setCharacterEncoding("utf-8");
 		String pageString = request.getParameter("page");
 		String limitString = request.getParameter("limit");
-		System.out.println(pageString + " " + limitString);
 		Integer page = Integer.valueOf(pageString);
 		Integer limit = Integer.valueOf(limitString);
 		List<User> users = userService.selectAll(page, limit);
-		String[] colums = { "id", "userName", "password" , "phoneNumber", "idCard", "bookedRoom", "havaTime","roomTime" ,"endTime"};
+		String[] colums = { "id", "userName", "password", "phoneNumber", "idCard", "bookedRoom", "havaTime", "roomTime",
+				"endTime" };
 		String data = JsonUtil.listToLayJson(colums, users);
-		System.out.println(data);
 		return data;
 	}
 

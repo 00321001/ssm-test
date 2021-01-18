@@ -14,7 +14,7 @@ import com.javen.model.User;
 import com.javen.service.IUserService;
 
 @Service
-public class IUserServiceImpl implements IUserService{
+public class IUserServiceImpl implements IUserService {
 
 	@Resource
 	private UserDao userDao;
@@ -34,18 +34,18 @@ public class IUserServiceImpl implements IUserService{
 		return this.userDao.updateById(user);
 	}
 
-	public List<User> selectAll(int page, int limit) throws Exception{
+	public List<User> selectAll(int page, int limit) throws Exception {
 		// TODO Auto-generated method stub
 		Date dateTime = new Date();
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-	    String nowTime = df.format(dateTime);// new Date()为获取当前系统时间
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 设置日期格式
+		String nowTime = df.format(dateTime);// new Date()为获取当前系统时间
 		int pageIndex = (page - 1) * limit;
 		int pageSize = limit;
-		this.userDao.updateOut(nowTime);//超时重置
-		List<User> users = this.userDao.selectAll(pageIndex,pageSize);
+		this.userDao.updateOut(nowTime);// 超时重置
+		List<User> users = this.userDao.selectAll(pageIndex, pageSize);
 		for (User user : users) {
 			String endTimeStr = user.getEndTime();
-			if(endTimeStr != null && endTimeStr != "") {
+			if (endTimeStr != null && endTimeStr != "") {
 				Date endTime = df.parse(endTimeStr);
 				long second = (endTime.getTime() - dateTime.getTime()) / 1000;
 				String haveTime = second / 3600 + ":" + (second % 3600) / 60;

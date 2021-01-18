@@ -145,12 +145,12 @@ layui.use('table', function(){
     ,cols: [[
       {type: 'checkbox', fixed: 'left'}
       ,{field:'id', width:60 , title: 'ID', sort: true}
-      ,{field:'userName', width:100, title: '用户名'}
-      ,{field:'password', width:120, title: '密码'}
-      ,{field:'phoneNumber', width:130, title: '手机号'}
-      ,{field:'idCard', width:160, title: '身份证号'}
+      ,{field:'userName', width:133, title: '用户名'}
+      ,{field:'password', width:133, title: '密码'}
+      ,{field:'phoneNumber', width:120, title: '手机号'}
+      ,{field:'idCard', width:180, title: '身份证号'}
       ,{field:'bookedRoom', width:100, title: '预定房间号'}
-      ,{field:'havaTime', width:100, title: '剩余时间'}
+      ,{field:'havaTime', width:110, title: '剩余时间'}
       ,{field:'roomTime', width:100, title: '入住时长'}
       ,{field:'endTime', width:190, title: '截止时间'}
       ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:130}
@@ -332,7 +332,7 @@ layui.use('table', function(){
 	var data = {
 		id
 	};
-	var url = "http://localhost:8080/maven00/user/deleteById";
+	var url = "http://localhost:8080/maven00/user/delete";
 	$.ajax({
 	    type: "get", //指定提交的类型 get对应 doGet()方法，post--->doPost()犯法
 	    url: url,    //传输地址的URL
@@ -341,7 +341,11 @@ layui.use('table', function(){
 	    async : false, //success和error代表是否返回成功，既后台给前台传输数据是否成功
 	    success: function (res)
 	    {
-	    	layer.msg("删除成功");
+	    	layer.msg("删除成功(已预定的房间不会删除)");
+        	//刷新页面
+        	table.reload('test', {
+        		url: 'http://localhost:8080/maven00/user/selectAll'
+        	});
 	    },
 	    error:function (XMLHttpRequest, textStatus, errorThrown) { 
 	        alert(typeof(errorThrown));

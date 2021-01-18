@@ -13,12 +13,9 @@
     <result  column="endTime"  property="endTime"  jdbcType="VARCHAR" />
   </resultMap>
   
-  
   <sql id="Base_Column_List" >
    	id,userName,password,phoneNumber,idCard,bookedRoom,havaTime,roomTime,endTime
   </sql>
-  
-  
   
   <select id="selectAll" resultMap="BaseResultMap" parameterType="java.lang.Integer">
     select 
@@ -26,7 +23,6 @@
     from user
     limit #{0},#{1};
   </select>
-
 
    <delete id="deleteById"  parameterType="java.lang.Integer">
     delete from user

@@ -12,10 +12,10 @@ public interface UserDao {
 
 	int updateById(User user);
 
-	List<User> selectAll(int page,int limit) throws Exception;
+	List<User> selectAll(int page, int limit) throws Exception;
 
 	int selectCount();
-	
+
 	void updateOut(String nowTime);
-	
+
 }
