@@ -108,8 +108,7 @@ public class UserController {
 		Integer page = Integer.valueOf(pageString);
 		Integer limit = Integer.valueOf(limitString);
 		List<User> users = userService.selectAll(page, limit);
-		String[] colums = { "id", "userName", "password", "phoneNumber", "idCard", "bookedRoom", "havaTime", "roomTime",
-				"endTime" };
+		String[] colums = { "id", "userName", "password", "phoneNumber", "idCard", "bookedRoom", "havaTime", "roomTime", "endTime"};
 		String data = JsonUtil.listToLayJson(colums, users);
 		return data;
 	}

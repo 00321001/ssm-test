@@ -17,33 +17,33 @@
     <div class="layui-form-item">
       <label class="layui-form-label">用户名</label>
       <div class="layui-input-block">
-        <input type="text" id="userName" name="userName" lay-verify="description" autocomplete="off" placeholder="用户名" class="layui-input">
+        <input type="text" style="width:340px;margin-top:50px" id="userName" name="userName" lay-verify="description" autocomplete="off" placeholder="用户名" class="layui-input">
       </div>
     </div>
     
     <div class="layui-form-item">
       <label class="layui-form-label">密码</label>
       <div class="layui-input-block">
-        <input type="text" id="password" name="password" lay-verify="description" autocomplete="off" placeholder="密码" class="layui-input">
+        <input type="text" style="width:340px" id="password" name="password" lay-verify="description" autocomplete="off" placeholder="密码" class="layui-input">
       </div>
     </div>
     
      <div class="layui-form-item">
       <label class="layui-form-label">手机号</label>
       <div class="layui-input-block">
-        <input type="text"  id="phoneNumber" name="phoneNumber" lay-verify="description" autocomplete="off" placeholder="手机号" class="layui-input">
+        <input type="text"  style="width:340px" id="phoneNumber" name="phoneNumber" lay-verify="description" autocomplete="off" placeholder="手机号" class="layui-input">
       </div>
     </div>
     
      <div class="layui-form-item">
       <label class="layui-form-label">身份证号</label>
       <div class="layui-input-block">
-        <input type="text"  id="idCard" name="idCard" lay-verify="description" autocomplete="off" placeholder="身份证号" class="layui-input">
+        <input type="text"  style="width:340px" id="idCard" name="idCard" lay-verify="description" autocomplete="off" placeholder="身份证号" class="layui-input">
       </div>
     </div>
     
 	<div class="layui-form-item" id="sub">
-    	<button style="" class="layui-btn" type="button" lay-submit lay-filter="demo2" id="addsub">提交</button>
+    	<button style="margin-left:220px" class="layui-btn" type="button" lay-submit lay-filter="demo2" id="addsub">提交</button>
   	</div>
 </form> 
 
@@ -60,33 +60,33 @@
     <div class="layui-form-item">
       <label class="layui-form-label">用户名</label>
       <div class="layui-input-block">
-        <input type="text" id="userName" name="userName" lay-verify="userName" autocomplete="off" placeholder="用户名" class="layui-input">
+        <input type="text"  style="width:340px;margin-top:50px" id="userName" name="userName" lay-verify="userName" autocomplete="off" placeholder="用户名" class="layui-input">
       </div>
     </div>
     
     <div class="layui-form-item">
       <label class="layui-form-label">密码</label>
       <div class="layui-input-block">
-        <input type="text" id="password" name="password" lay-verify="password" autocomplete="off" placeholder="密码" class="layui-input">
+        <input type="text" style="width:340px" id="password" name="password" lay-verify="password" autocomplete="off" placeholder="密码" class="layui-input">
       </div>
     </div>
     
      <div class="layui-form-item">
       <label class="layui-form-label">手机号</label>
       <div class="layui-input-block">
-        <input type="text"  id="phoneNumber" name="phoneNumber" lay-verify="phoneNumber" autocomplete="off" placeholder="手机号" class="layui-input">
+        <input type="text"  style="width:340px" id="phoneNumber" name="phoneNumber" lay-verify="phoneNumber" autocomplete="off" placeholder="手机号" class="layui-input">
       </div>
     </div>
     
      <div class="layui-form-item">
       <label class="layui-form-label">身份证号</label>
       <div class="layui-input-block">
-        <input type="text"  id="idCard" name="idCard" lay-verify="idCard" autocomplete="off" placeholder="身份证号" class="layui-input">
+        <input type="text"  style="width:340px" id="idCard" name="idCard" lay-verify="idCard" autocomplete="off" placeholder="身份证号" class="layui-input">
       </div>
     </div>
     
 	<div class="layui-form-item" id="sub">
-    	<button style="" class="layui-btn" type="button" lay-submit lay-filter="demo3" id="updatasub">提交</button>
+    	<button style="margin-left:220px" class="layui-btn" type="button" lay-submit lay-filter="demo3" id="updatasub">提交</button>
   	</div>
 </form>
  
@@ -201,7 +201,7 @@ layui.use('table', function(){
 	                }            
 	           },
              error:function (data) {
-	               	layer.msg("网络错误");
+	               	layer.msg("您的账户已注册过");
 	                $("#addForm")[0].reset();
 	                form.render(); 
 	           } 
@@ -234,7 +234,7 @@ layui.use('table', function(){
 			            }            
 			       },
 			          error:function (data) {
-			           	layer.msg("网络错误");
+			           	layer.msg("不可修改为其他用户的信息");
 			            $("#updataForm")[0].reset();
 			            form.render(); 
 			       } 
@@ -327,7 +327,7 @@ layui.use('table', function(){
     }
   });
   
-//删除
+  //删除
   function deleteById(id){
 	var data = {
 		id
@@ -341,7 +341,7 @@ layui.use('table', function(){
 	    async : false, //success和error代表是否返回成功，既后台给前台传输数据是否成功
 	    success: function (res)
 	    {
-	    	layer.msg("删除成功(已预定的房间不会删除)");
+	    	layer.msg("删除成功(已预定房间的用户信息不会删除)");
         	//刷新页面
         	table.reload('test', {
         		url: 'http://localhost:8080/maven00/user/selectAll'
