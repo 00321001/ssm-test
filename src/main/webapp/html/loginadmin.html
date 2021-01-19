@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Access-Control-Allow-Origin" content="*">
+<title>管理员登录</title>
+<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<body style="background: #FF6347;">
+	<input type="button" value="用户登录"
+		style="width: 10%; height: 50px; margin-left: 1300px; margin-top: 20px; text-align: center; font-size: 23px; background-color: #CD5C5C; color: #fff;"
+		onclick="jump()" />
+	<div
+		style="width: 350px; height: 450px; background-color: #FF6347; margin-left: 600px; margin-top: 30px">
+		<div
+			style="width: 80%; height: 80px; background-color: #FF6347; float: left; margin-top: 20px; margin-left: 10%; font-size: 60px; text-align: center; line-height: 70px; color: #fff">Welcome</div>
+		<input id="adminName" placeholder="请输入管理员用户名" type="text"
+			style="width: 80%; height: 40px; margin-left: 9%; margin-top: 50px" />
+		<input id="password" placeholder="请输入密码" type="text"
+			style="width: 80%; height: 40px; margin-left: 9%; margin-top: 20px" />
+		<input type="button" value="立即登录"
+			style="width: 80%; height: 50px; margin-left: 10%; margin-top: 20px; text-align: center; font-size: 30px; background-color: #CD5C5C; color: #fff;"
+			onclick="get()" />
+	</div>
+</body>
+<script>
+	function get() {
+		var data = {
+			"adminName" : $("#adminName").val(),
+			"password" : $("#password").val()
+		};
+		var url = "http://localhost:8080/maven00/admin/loginAdmin";
+		$.ajax({
+			type : "get", //指定提交的类型 get对应 doGet()方法，post--->doPost()犯法
+			url : url, //传输地址的URL
+			data : data, //data代表我们的数据  key -value类型的数据
+			dataType : 'JSON',
+			async : false, //success和error代表是否返回成功，既后台给前台传输数据是否成功
+			success : function(res) {
+				console.info(res);
+				alert("登录成功");
+				window.location.href = "back.html";
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+				alert("登录失败");
+			}
+		});
+	}
+	function jump() {
+		window.location.href = "loginuser.html";
+	}
+</script>
+</html>

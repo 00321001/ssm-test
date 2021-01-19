@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +32,8 @@ public class UserController {
 	public String test(HttpServletRequest request, Model model) {
 		return "back";
 	}
-
+		
+	//删除用户信息
 	@ResponseBody
 	@RequestMapping(value = "/delete", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
 	public String delete(HttpServletRequest request) {
@@ -47,6 +49,7 @@ public class UserController {
 		return data;
 	}
 
+	//用户注册
 	@ResponseBody
 	@RequestMapping(value = "/signUp", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
 	public String signUp(HttpServletRequest request) {
@@ -71,6 +74,7 @@ public class UserController {
 		return data;
 	}
 
+	//修改信息
 	@ResponseBody
 	@RequestMapping(value = "/update", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
 	public String update(HttpServletRequest request) {
@@ -98,7 +102,7 @@ public class UserController {
 		return data;
 	}
 
-	// 返回字符串
+	//查询全部
 	@ResponseBody
 	@RequestMapping(value = "/selectAll", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
 	public String selectAll(HttpServletRequest request) throws Exception {
@@ -121,5 +125,41 @@ public class UserController {
 		String data = String.valueOf(count);
 		String json = "{" + "\"count\":" + data + "}";
 		return json;
+	}
+	
+	//用户登录
+	@ResponseBody
+	@RequestMapping(value = "/loginUser", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
+	public String loginUser(HttpServletRequest request) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		HttpSession session = request.getSession();
+		String phoneNumber = request.getParameter("phoneNumber");
+		String password = request.getParameter("password");
+		User user = new User();
+		user.setPassword(password);
+		user.setPhoneNumber(phoneNumber);
+		User userlogin = userService.loginUser(user);
+		session.setAttribute("userid",userlogin.getId());
+		session.setAttribute("userName",userlogin.getUserName());
+		String data = "{\"data\":\"返回成功\"}";
+		return data;
+	}
+	
+	//检查登录
+	@ResponseBody
+	@RequestMapping(value = "/checkUser", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
+	public String checkUser(HttpServletRequest request) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		HttpSession session = request.getSession();
+		String userid = (String)session.getAttribute("userid");
+		String userName = (String)session.getAttribute("userName");
+		String data;
+		if(userid == null || userid == "") {
+			data = "{\"code\":\"7777\"}";
+		}else {
+			data = "{\"code\":\"0000\",\"data\":{\"userid\":\""+userid+"\",\"userName\":\""+userName+"\"}}";
+		}
+		System.out.println(data);
+		return data;
 	}
 }

@@ -6,6 +6,7 @@
   <title>后台</title>
   <link rel="stylesheet" href="../sources/layui/css/layui.css">
   <script src="../sources/layui/layui.js" charset="utf-8"></script>
+  <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -29,14 +30,14 @@
       <li class="layui-nav-item">
         <a href="javascript:;">
           <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-          	ZZY
+          	admin
         </a>
         <dl class="layui-nav-child">
           <dd><a href="">基本资料</a></dd>
           <dd><a href="">安全设置</a></dd>
         </dl>
       </li>
-      <li class="layui-nav-item"><a href="">退了</a></li>
+      <li class="layui-nav-item"><a href="loginuser.html">退了</a></li>
     </ul>
   </div>
   
@@ -78,6 +79,29 @@
 </div>
 <script src="../sources/layui/layui.js"></script>
 <script>
+
+checklogin();
+function checklogin() {
+	var url = "http://localhost:8080/maven00/admin/checkAdmin";
+	$.ajax({
+		type : "get", //指定提交的类型 get对应 doGet()方法，post--->doPost()犯法
+		url : url, //传输地址的URL
+		data : {}, //data代表我们的数据  key -value类型的数据
+		dataType : 'JSON',
+		async : false, //success和error代表是否返回成功，既后台给前台传输数据是否成功
+		success : function(res) {
+			if (res.code == "7777") {
+				window.location.href = "http://localhost:8080/maven00/html/loginadmin.html";
+			}
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			alert("请重新登陆");
+			window.location.href = "http://localhost:8080/maven00/html/loginadmin.html";
+			
+		}
+	});
+}
+
 //JavaScript代码区域
 	//layui模块的使用
 	layui.use('element', function() {

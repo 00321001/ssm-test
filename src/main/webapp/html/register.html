@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Access-Control-Allow-Origin" content="*">
+<title>注册账号</title>
+<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<body style="background: #F08080;">
+	<div
+		style="width: 350px; height: 450px; background-color: #F08080; margin-left: 600px; margin-top: 100px">
+		<div
+			style="width: 80%; height: 80px; background-color: #F08080; float: left; margin-top: 20px; margin-left: 10%; font-size: 50px; text-align: center; line-height: 70px; color: #fff">注册帐号</div>
+		<input id="userName" placeholder="请输入用户名" type="text"
+			style="width: 80%; height: 40px; margin-left: 9%; margin-top: 10px" />
+		<input id="password" placeholder="请输入密码" type="text"
+			style="width: 80%; height: 40px; margin-left: 9%; margin-top: 10px" />
+		<input id="phoneNumber" placeholder="请输入手机号" type="text"
+			style="width: 80%; height: 40px; margin-left: 9%; margin-top: 10px" />
+		<input id="idCard" placeholder="请输入身份证号" type="text"
+			style="width: 80%; height: 40px; margin-left: 9%; margin-top: 10px" />
+		<input type="button" value="提交"
+			style="width: 80%; height: 50px; margin-left: 10%; margin-top: 20px; text-align: center; font-size: 30px; background-color: #BC8F8F; color: #fff;"
+			onclick="get()" /> <input type="button" value="返回"
+			style="width: 80%; height: 50px; margin-left: 10%; margin-top: 20px; text-align: center; font-size: 30px; background-color: #BC8F8F; color: #fff;"
+			onclick="backs()" />
+	</div>
+</body>
+<script>
+	function get() {
+		var data = {
+			"userName" : $("#userName").val(),
+			"password" : $("#password").val(),
+			"phoneNumber" : $("#phoneNumber").val(),
+			"idCard" : $("#idCard").val()
+		};
+		var url = "http://localhost:8080/maven00/user/signUp";
+		$.ajax({
+			type : "get", //指定提交的类型 get对应 doGet()方法，post--->doPost()犯法
+			url : url, //传输地址的URL
+			data : data, //data代表我们的数据  key -value类型的数据
+			dataType : 'JSON',
+			async : false, //success和error代表是否返回成功，既后台给前台传输数据是否成功
+			success : function(res) {
+				console.info(res);
+				alert("注册成功");
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+				alert("信息输入有误或该用户已注册");
+			}
+		});
+	}
+	function backs() {
+		window.location.href = "loginuser.html";
+	}
+</script>
+</html>

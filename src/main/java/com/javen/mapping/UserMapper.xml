@@ -23,6 +23,13 @@
     from user
     limit #{0},#{1};
   </select>
+  
+   <select id="loginUser" resultMap="BaseResultMap" parameterType="com.javen.model.User">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where phoneNumber = #{phoneNumber,jdbcType=VARCHAR} and password = #{password,jdbcType=VARCHAR};
+  </select>
 
    <delete id="deleteById"  parameterType="java.lang.Integer">
     delete from user

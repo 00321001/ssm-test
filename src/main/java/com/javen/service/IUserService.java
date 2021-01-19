@@ -15,5 +15,7 @@ public interface IUserService {
 	List<User> selectAll(int page, int limit) throws Exception;
 
 	int selectCount();
+	
+	User loginUser(User user);
 
 }

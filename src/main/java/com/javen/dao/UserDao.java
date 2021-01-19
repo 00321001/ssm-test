@@ -17,5 +17,7 @@ public interface UserDao {
 	int selectCount();
 
 	void updateOut(String nowTime);
+	
+	User loginUser(User user);
 
 }

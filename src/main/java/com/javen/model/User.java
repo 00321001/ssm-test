@@ -89,5 +89,5 @@ public class User {
 				+ ", idCard=" + idCard + ", bookedRoom=" + bookedRoom + ", havaTime=" + havaTime + ", roomTime="
 				+ roomTime + ", endTime=" + endTime + "]";
 	}
-	
+
 }

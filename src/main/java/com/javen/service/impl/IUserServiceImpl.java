@@ -60,4 +60,10 @@ public class IUserServiceImpl implements IUserService {
 		return this.userDao.selectCount();
 	}
 
+	public User loginUser(User user) {
+		// TODO Auto-generated method stub
+		return this.userDao.loginUser(user);
+	}
+
+	
 }

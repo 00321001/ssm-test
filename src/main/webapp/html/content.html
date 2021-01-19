@@ -75,6 +75,7 @@
     <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 
     <script>
+    
         layui.use('table', function () {
             var table = layui.table;
             function reloadTable(){
@@ -190,8 +191,8 @@
                     { type: 'checkbox' }
                     , { field: 'id', width: 80, title: 'ID', sort: true }
                     , { field: 'roomNum', width: 80, title: '房间号' }
-                    , { field: 'roomState', width: 80, title: '房间状态', templet: function(d){if(d.roomState == 0){return '空闲'}else if(d.roomState == 1){return '已预定'}else if(d.roomState == 2){return '已入住'}}, minWidth: 100}
-                    , { field: 'userName', width: 80, title: '用户姓名', minWidth: 50 }
+                    , { field: 'roomState', width: 100, title: '房间状态', templet: function(d){if(d.roomState == 0){return '空闲'}else if(d.roomState == 1){return '已预定'}else if(d.roomState == 2){return '已入住'}}, minWidth: 100}
+                    , { field: 'userName', width: 100, title: '用户姓名', minWidth: 50 }
                     , { field: 'phoneNumber', title: '手机号', minWidth: 50 }
                     , { field: 'idCard', title: '身份证号', minWidth: 50 }
                     , { field: 'roomTime', title: '入住时长', minWidth: 50 }
