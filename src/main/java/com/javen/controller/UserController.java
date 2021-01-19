@@ -27,24 +27,38 @@ public class UserController {
 	public String test(HttpServletRequest request, Model model) {
 		return "back";
 	}
-		
-	//删除用户信息
+
+	// 删除用户信息
 	@ResponseBody
 	@RequestMapping(value = "/delete", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
 	public String delete(HttpServletRequest request) {
 		String idString = request.getParameter("id");
+		if (idString == null) {
+			return "{\"code\":\"9999\",\"data\":\"参数为空\"}";
+		} else {
+			idString = idString.trim();
+			if (idString.length() == 0) {
+				return "{\"code\":\"9999\",\"data\":\"参数为空\"}";
+			}
+		}
+		// 登录验证
+		HttpSession se = request.getSession();
+		String adminId = (String) se.getAttribute("adminId");
+		if (adminId == null || adminId.length() == 0) {
+			return "{\"code\":\"7777\",\"data\":\"未登录\"}";
+		}
 		Integer id = Integer.valueOf(idString);
 		int flag = userService.deleteById(id);
 		String data;
 		if (flag == 1) {
-			data = "{\"data\":\"删除成功\"}";
+			data = "{\"code\":\"0000\",\"data\":\"删除成功\"}";
 		} else {
-			data = "{\"data\":\"删除失败\"}";
+			data = "{\"code\":\"0000\",\"data\":\"删除失败\"}";
 		}
 		return data;
 	}
 
-	//用户注册
+	// 用户注册
 	@ResponseBody
 	@RequestMapping(value = "/signUp", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
 	public String signUp(HttpServletRequest request) {
@@ -69,7 +83,7 @@ public class UserController {
 		return data;
 	}
 
-	//修改信息
+	// 修改信息
 	@ResponseBody
 	@RequestMapping(value = "/update", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
 	public String update(HttpServletRequest request) {
@@ -97,17 +111,32 @@ public class UserController {
 		return data;
 	}
 
-	//查询全部
+	// 查询全部
 	@ResponseBody
 	@RequestMapping(value = "/selectAll", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
 	public String selectAll(HttpServletRequest request) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		String pageString = request.getParameter("page");
 		String limitString = request.getParameter("limit");
+		if (pageString == null || limitString == null) {
+			return "{\"code\":\"9999\",\"data\":\"参数为空\"}";
+		} else {
+			pageString = pageString.trim();
+			limitString = limitString.trim();
+			if (pageString.length() == 0 || limitString.length() == 0) {
+				return "{\"code\":\"9999\",\"data\":\"参数为空\"}";
+			}
+		}
+		HttpSession se = request.getSession();
+		String adminId = (String) se.getAttribute("adminId");
+		if (adminId == null || adminId.length() == 0) {
+			return "{\"code\":\"7777\",\"data\":\"未登录\"}";
+		}
 		Integer page = Integer.valueOf(pageString);
 		Integer limit = Integer.valueOf(limitString);
 		List<User> users = userService.selectAll(page, limit);
-		String[] colums = { "id", "userName", "password", "phoneNumber", "idCard", "bookedRoom", "havaTime", "roomTime", "endTime"};
+		String[] colums = { "id", "userName", "password", "phoneNumber", "idCard", "bookedRoom", "havaTime", "roomTime",
+				"endTime" };
 		String data = JsonUtil.listToLayJson(colums, users);
 		return data;
 	}
@@ -116,13 +145,18 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value = "/selectCount", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
 	public String selectCount(HttpServletRequest request) throws Exception {
+		HttpSession se = request.getSession();
+		String adminId = (String) se.getAttribute("adminId");
+		if (adminId == null || adminId.length() == 0) {
+			return "{\"code\":\"7777\",\"data\":\"未登录\"}";
+		}
 		int count = userService.selectCount();
 		String data = String.valueOf(count);
-		String json = "{" + "\"count\":" + data + "}";
+		String json = "{\"code\":\"0000\",\"count\":" + data + "}";
 		return json;
 	}
-	
-	//用户登录
+
+	// 用户登录
 	@ResponseBody
 	@RequestMapping(value = "/loginUser", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
 	public String loginUser(HttpServletRequest request) throws Exception {
@@ -130,29 +164,38 @@ public class UserController {
 		HttpSession session = request.getSession();
 		String phoneNumber = request.getParameter("phoneNumber");
 		String password = request.getParameter("password");
+		if (phoneNumber == null || password == null) {
+			return "{\"code\":\"9999\",\"data\":\"参数为空\"}";
+		} else {
+			phoneNumber = phoneNumber.trim();
+			password = password.trim();
+			if (phoneNumber.length() == 0 || password.length() == 0) {
+				return "{\"code\":\"9999\",\"data\":\"参数为空\"}";
+			}
+		}
 		User user = new User();
 		user.setPassword(password);
 		user.setPhoneNumber(phoneNumber);
 		User userlogin = userService.loginUser(user);
-		session.setAttribute("userid",userlogin.getId().toString());
-		session.setAttribute("userName",userlogin.getUserName());
+		session.setAttribute("userid", userlogin.getId().toString());
+		session.setAttribute("userName", userlogin.getUserName());
 		String data = "{\"data\":\"返回成功\"}";
 		return data;
 	}
-	
-	//检查登录
+
+	// 检查登录
 	@ResponseBody
 	@RequestMapping(value = "/checkUser", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
 	public String checkUser(HttpServletRequest request) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		HttpSession session = request.getSession();
-		String userid = (String)session.getAttribute("userid");
-		String userName = (String)session.getAttribute("userName");
+		String userid = (String) session.getAttribute("userid");
+		String userName = (String) session.getAttribute("userName");
 		String data;
-		if(userid == null || userid == "") {
-			data = "{\"code\":\"7777\"}";
-		}else {
-			data = "{\"code\":\"0000\",\"data\":{\"userid\":\""+userid+"\",\"userName\":\""+userName+"\"}}";
+		if (userid == null || userid == "") {
+			data = "{\"code\":\"7777\",\"data\":\"未登录\"}";
+		} else {
+			data = "{\"code\":\"0000\",\"data\":{\"userid\":\"" + userid + "\",\"userName\":\"" + userName + "\"}}";
 		}
 		System.out.println(data);
 		return data;
