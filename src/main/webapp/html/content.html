@@ -128,7 +128,7 @@
           	                }            
           	           },
                          error:function (data) {
-          	               	layer.msg("网络错误");
+          	               	layer.msg("请输入正确的房间号！");
           	                $("#addForm")[0].reset();
           	                form.render(); 
           	           } 
@@ -151,7 +151,7 @@
           			       	 	page();  
           			     },
           			        error:function (data) {
-          			         	layer.msg("网络错误");
+          			         	layer.msg("请输入完整信息！");
           			          $("#updataForm")[0].reset();
           			          form.render(); 
           			     } 
@@ -358,10 +358,6 @@
               	});
 			}
         });
-        
-
     </script>
-
 </body>
-
 </html>

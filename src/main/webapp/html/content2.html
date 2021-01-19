@@ -172,7 +172,7 @@ layui.use('table', function(){
   	}
   });
   
-  //引入from表单
+//引入from表单
   layui.use(['form', 'laydate'], function(){
 		form = layui.form;
 		form.render();
@@ -186,15 +186,19 @@ layui.use('table', function(){
 	           dataType:'JSON',  
 	           success:function(res){       
 	                if(res.status='0'){ 
-	     			console.log(res);	
-	               	 	layer.msg("添加成功");
-	               		$("#addForm")[0].reset();
-	                 	form.render();
-	            		//刷新页面
-	            		table.reload('test', {
-	            			url: 'http://localhost:8080/maven00/user/selectAll'
-	            		});
-	             	 	page();
+	     				console.log(res);
+	     				if(res.data == "0000"){
+	     					layer.msg("添加成功");
+	               			$("#addForm")[0].reset();
+	                 		form.render();
+	            			//刷新页面
+	            			table.reload('test', {
+	            				url: 'http://localhost:8080/maven00/user/selectAll'
+	            			});
+	             	 		page();
+	     				}else{
+	     					layer.msg("添加失败，注册信息不可为空！");  
+	     				}	
 	                }else{
 	                	layer.msg("添加失败");  
 		                $("#addForm")[0].reset();
@@ -202,7 +206,7 @@ layui.use('table', function(){
 	                }            
 	           },
              error:function (data) {
-	               	layer.msg("您的账户已注册过");
+	               	layer.msg("您输入的账户已注册过");
 	                $("#addForm")[0].reset();
 	                form.render(); 
 	           } 
@@ -219,23 +223,27 @@ layui.use('table', function(){
 			       dataType:'JSON',  
 			       success:function(res){       
 			            if(res.status='0'){
-			  			console.log(res);	
-			           	 	layer.msg("修改成功");
-			           		$("#updataForm")[0].reset();
-			             	form.render();
-			            	//刷新页面
-			            	table.reload('test', {
-			            		url: 'http://localhost:8080/maven00/user/selectAll'
-			            	});
-			         	 	page();
+			  				console.log(res);
+			  				if(res.data == "0000"){
+			  					layer.msg("修改成功");
+			           			$("#updataForm")[0].reset();
+			             		form.render();
+			            		//刷新页面
+			            		table.reload('test', {
+			            			url: 'http://localhost:8080/maven00/user/selectAll'
+			            		});
+			         	 		page();
+			  				}else{
+			  					layer.msg("修改失败，不可修改为空信息！");
+			  				} 	
 			            }else{
 			            	layer.msg("修改失败");  
-			             $("#updataForm")[0].reset();
-			             form.render();
+			             	$("#updataForm")[0].reset();
+			             	form.render();
 			            }            
 			       },
 			          error:function (data) {
-			           	layer.msg("不可修改为其他用户的信息");
+			           	layer.msg("不可修改为其他用户的信息！");
 			            $("#updataForm")[0].reset();
 			            form.render(); 
 			       } 

@@ -41,11 +41,17 @@
 			async : false, //success和error代表是否返回成功，既后台给前台传输数据是否成功
 			success : function(res) {
 				console.info(res);
-				alert("登录成功");
-				window.location.href = "bookRoom.html";
+				if(res.code == "0000"){
+					alert("登录成功！");
+					window.location.href = "bookRoom.html";
+				}else if(res.code == "9999"){
+					alert("输入信息不可为空！");
+				} else{
+					alert("登录失败！");
+				}
 			},
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
-				alert("登录失败");
+				alert("登录失败！");
 			}
 		});
 	}

@@ -43,10 +43,14 @@
 			async : false, //success和error代表是否返回成功，既后台给前台传输数据是否成功
 			success : function(res) {
 				console.info(res);
-				alert("注册成功");
+				if(res.data == "0000"){
+					alert("注册成功");
+				}else{
+					alert("不可输入空信息，请重新输入！");
+				}
 			},
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
-				alert("信息输入有误或该用户已注册");
+				alert("该用户已注册，请重新输入！");
 			}
 		});
 	}
