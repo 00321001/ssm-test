@@ -1,14 +1,14 @@
 package com.javen.model;
 
 public class Admin {
-	private int id;
+	private Integer id;
 	private String adminName;
 	private String password;
 	
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getAdminName() {

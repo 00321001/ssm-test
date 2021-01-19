@@ -33,13 +33,27 @@ public class UserController {
 	@RequestMapping(value = "/delete", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
 	public String delete(HttpServletRequest request) {
 		String idString = request.getParameter("id");
+		if (idString == null) {
+			return "{\"code\":\"9999\",\"data\":\"参数为空\"}";
+		} else {
+			idString = idString.trim();
+			if (idString.length() == 0) {
+				return "{\"code\":\"9999\",\"data\":\"参数为空\"}";
+			}
+		}
+		// 登录验证
+		HttpSession se = request.getSession();
+		String adminId = (String) se.getAttribute("adminId");
+		if (adminId == null || adminId.length() == 0) {
+			return "{\"code\":\"7777\",\"data\":\"未登录\"}";
+		}
 		Integer id = Integer.valueOf(idString);
 		int flag = userService.deleteById(id);
 		String data;
 		if (flag == 1) {
-			data = "{\"data\":\"删除成功\"}";
+			data = "{\"code\":\"0000\",\"data\":\"删除成功\"}";
 		} else {
-			data = "{\"data\":\"删除失败\"}";
+			data = "{\"code\":\"0000\",\"data\":\"删除失败\"}";
 		}
 		return data;
 	}
@@ -112,6 +126,20 @@ public class UserController {
 		request.setCharacterEncoding("utf-8");
 		String pageString = request.getParameter("page");
 		String limitString = request.getParameter("limit");
+		if (pageString == null || limitString == null) {
+			return "{\"code\":\"9999\",\"data\":\"参数为空\"}";
+		} else {
+			pageString = pageString.trim();
+			limitString = limitString.trim();
+			if (pageString.length() == 0 || limitString.length() == 0) {
+				return "{\"code\":\"9999\",\"data\":\"参数为空\"}";
+			}
+		}
+		HttpSession se = request.getSession();
+		String adminId = (String) se.getAttribute("adminId");
+		if (adminId == null || adminId.length() == 0) {
+			return "{\"code\":\"7777\",\"data\":\"未登录\"}";
+		}
 		Integer page = Integer.valueOf(pageString);
 		Integer limit = Integer.valueOf(limitString);
 		List<User> users = userService.selectAll(page, limit);
@@ -125,9 +153,14 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value = "/selectCount", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
 	public String selectCount(HttpServletRequest request) throws Exception {
+		HttpSession se = request.getSession();
+		String adminId = (String) se.getAttribute("adminId");
+		if (adminId == null || adminId.length() == 0) {
+			return "{\"code\":\"7777\",\"data\":\"未登录\"}";
+		}
 		int count = userService.selectCount();
 		String data = String.valueOf(count);
-		String json = "{" + "\"count\":" + data + "}";
+		String json = "{\"code\":\"0000\",\"count\":" + data + "}";
 		return json;
 	}
 
@@ -139,6 +172,15 @@ public class UserController {
 		HttpSession session = request.getSession();
 		String phoneNumber = request.getParameter("phoneNumber");
 		String password = request.getParameter("password");
+		if (phoneNumber == null || password == null) {
+			return "{\"code\":\"9999\",\"data\":\"参数为空\"}";
+		} else {
+			phoneNumber = phoneNumber.trim();
+			password = password.trim();
+			if (phoneNumber.length() == 0 || password.length() == 0) {
+				return "{\"code\":\"9999\",\"data\":\"参数为空\"}";
+			}
+		}
 		User user = new User();
 		user.setPassword(password);
 		user.setPhoneNumber(phoneNumber);
@@ -159,7 +201,7 @@ public class UserController {
 		String userName = (String) session.getAttribute("userName");
 		String data;
 		if (userid == null || userid == "") {
-			data = "{\"code\":\"7777\"}";
+			data = "{\"code\":\"7777\",\"data\":\"未登录\"}";
 		} else {
 			data = "{\"code\":\"0000\",\"data\":{\"userid\":\"" + userid + "\",\"userName\":\"" + userName + "\"}}";
 		}
