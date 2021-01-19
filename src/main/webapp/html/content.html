@@ -65,9 +65,9 @@
     </script>
 
     <script type="text/html" id="barDemo">
-        <a class="layui-btn layui-btn-xs" lay-event="bookRoom">预定</a>
+        <a class="layui-btn layui-btn-xs" lay-event="bookRoom">预约</a>
 		<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="checkIn">入住</a>
-		<a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="checkOut">退房</a>
+		<a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="checkOut">退房/取消预约</a>
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
     </script>
 
@@ -198,7 +198,7 @@
                     , { field: 'roomTime', title: '入住时长', minWidth: 50 }
                     , { field: 'endTime', title: '截止时间', minWidth: 50 }
                     , { field: 'haveTime', title: '剩余时间', minWidth: 50 }
-                    , { fixed: 'right', title: '操作', toolbar: '#barDemo', width: 250 }
+                    , { fixed: 'right', title: '操作', toolbar: '#barDemo', width: 300 }
                 ]]
                 , page: true
                 , limit: 10 //每页规定的数据量
@@ -269,8 +269,8 @@
                 		checkIn(data);
                 	}
               } else if (obj.event === 'checkOut'){
-            	  if(data.roomState!='2'){
-              		layer.msg("房间不处于已入住状态！");
+            	  if(data.roomState!='2' && data.roomState!='1'){
+              		layer.msg("房间不处于已入住或已预定状态！");
               	}else{
               		checkOut(data);
               	}

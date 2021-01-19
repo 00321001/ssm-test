@@ -43,7 +43,7 @@ public class AdminController {
 		Admin adminlogin = adminService.loginAdmin(admin);
 		session.setAttribute("adminName", adminlogin.getAdminName());
 		session.setAttribute("adminId", adminlogin.getId().toString());
-		String data = "{\"code\":\"9999\",\"data\":\"返回成功\"}";
+		String data = "{\"code\":\"0000\",\"data\":\"返回成功\"}";
 		return data;
 	}
 

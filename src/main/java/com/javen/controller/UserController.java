@@ -187,7 +187,7 @@ public class UserController {
 		User userlogin = userService.loginUser(user);
 		session.setAttribute("userid", userlogin.getId().toString());
 		session.setAttribute("userName", userlogin.getUserName());
-		String data = "{\"data\":\"返回成功\"}";
+		String data = "{\"code\":\"0000\",\"data\":\"返回成功\"}";
 		return data;
 	}
 
