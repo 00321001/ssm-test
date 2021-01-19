@@ -37,6 +37,14 @@
     from room limit #{0}, #{1};
   </select>
   
+  <select id="selectFreeRoom" resultMap="BaseResultMap">
+  	select id, roomNum from room where roomState = '0' limit #{0}, #{1};
+  </select>
+  
+  <select id="selectFreeCount" resultType="java.lang.Integer">
+  	select count(*) from room where roomState = '0';
+  </select>
+  
   <update id="resetTimeOut" parameterType="java.lang.String">
   	update room set roomState=0, userName=null, phoneNumber=null, idCard = null, roomTime = null, endTime = null, haveTime = null
   	<![CDATA[where endTime < #{0}]]>;
