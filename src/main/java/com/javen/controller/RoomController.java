@@ -106,7 +106,7 @@ public class RoomController {
 
 	// 后台添加房间接口
 	@ResponseBody
-	@RequestMapping(value = "/addRoom", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
+	@RequestMapping(value = "/addRoom", method = RequestMethod.POST, produces = "text/plain;charset=utf-8")
 	public String addRoom(HttpServletRequest request) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		String roomNumStr = request.getParameter("roomNum");
