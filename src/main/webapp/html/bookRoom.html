@@ -91,7 +91,7 @@
         async: false, //success和error代表是否返回成功，既后台给前台传输数据是否成功
         success: function (res) {
           if (res.code == "7777") {
-            window.location.href = "login.html"
+            window.location.href = "loginuser.html"
           } else {
             userid = res.data.userid;
             userName = res.data.userName;
