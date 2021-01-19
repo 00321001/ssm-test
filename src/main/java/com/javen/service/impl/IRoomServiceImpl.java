@@ -109,6 +109,38 @@ public class IRoomServiceImpl implements IRoomService{
 		map.put("endTime", endTimeStr);
 		return this.roomDao.checkIn(map);
 	}
+
+	public List<Room> selectFreeRoom(Integer pageIndex, Integer pageSize) {
+		// TODO Auto-generated method stub
+		Date dateTime = new Date();
+		SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String dataTimeStr = simpleFormat.format(dateTime);
+		System.out.println(this.roomDao.resetTimeOut(dataTimeStr));
+		
+		Integer startIndex = (pageIndex - 1) * pageSize;
+		return this.roomDao.selectFreeRoom(startIndex, pageSize);
+	}
+
+	public int selectFreeCount() {
+		// TODO Auto-generated method stub
+		return this.roomDao.selectFreeCount();
+	}
+
+	public int cancelBook(String userid) {
+		// TODO Auto-generated method stub
+		User user = roomDao.selectUserById(Integer.parseInt(userid));
+		if(user.getBookedRoom() == null || user.getBookedRoom() == "") {
+			return 1;
+		}
+		try {
+			this.checkIn(user.getPhoneNumber(), Integer.parseInt(user.getBookedRoom()), "-1");
+			return 0;
+		}catch (Exception e) {
+			e.printStackTrace();
+			return 2;
+		}
+		
+	}
 	
 	
 }

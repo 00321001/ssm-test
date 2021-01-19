@@ -16,4 +16,6 @@ public interface RoomDao {
 	Room selectRoomByRoomNum(Integer roomNum);
 	int bookRoom(HashMap<String, String> map);
 	int checkIn(HashMap<String, String> map);
+	List<Room> selectFreeRoom(Integer startIndex, Integer pageSize);
+	int selectFreeCount();
 }

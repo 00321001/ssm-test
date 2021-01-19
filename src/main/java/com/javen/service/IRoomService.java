@@ -11,4 +11,7 @@ public interface IRoomService {
 	public int addRoom(Integer roomNum);
 	public int bookRoom(Integer userId, Integer roomNum, String roomTime);
 	public int checkIn(String phoneNumber, Integer roomNum, String roomTime);
+	public List<Room> selectFreeRoom(Integer pageIndex, Integer pageSize);
+	public int selectFreeCount();
+	public int cancelBook(String userid);
 }
