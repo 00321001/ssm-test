@@ -37,7 +37,7 @@
           <dd><a href="">安全设置</a></dd>
         </dl>
       </li>
-      <li class="layui-nav-item"><a href="loginuser.html">退了</a></li>
+      <li class="layui-nav-item"><a href="javascript:void(0);" onclick="logout()">退了</a></li>
     </ul>
   </div>
   
@@ -101,6 +101,23 @@ function checklogin() {
 		}
 	});
 }
+
+function logout() {
+    var url = "http://localhost:8080/maven00/room/logout";
+    $.ajax({
+      type: "get", //指定提交的类型 get对应 doGet()方法，post--->doPost()犯法
+      url: url,    //传输地址的URL
+      data: {}, //data代表我们的数据  key -value类型的数据
+      dataType: 'JSON',
+      async: false, //success和error代表是否返回成功，既后台给前台传输数据是否成功
+      success: function (res) {
+        window.location.reload();
+      },
+      error: function (XMLHttpRequest, textStatus, errorThrown) {
+        alert(typeof (errorThrown));
+      }
+    });
+  }
 
 //JavaScript代码区域
 	//layui模块的使用

@@ -6,8 +6,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,15 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.javan.util.JsonUtil;
-import com.javan.util.ObjtoLayJson;
 import com.javen.model.User;
 import com.javen.service.IUserService;
 
 @Controller // 返回指定页面 ajax 不能接受到页面的返回 ，所以说
 @RequestMapping("/user")
 public class UserController {
-	private static Logger log = LoggerFactory.getLogger(UserController.class);
-
 	@Resource
 	private IUserService userService;
 
@@ -139,7 +134,7 @@ public class UserController {
 		user.setPassword(password);
 		user.setPhoneNumber(phoneNumber);
 		User userlogin = userService.loginUser(user);
-		session.setAttribute("userid",userlogin.getId());
+		session.setAttribute("userid",userlogin.getId().toString());
 		session.setAttribute("userName",userlogin.getUserName());
 		String data = "{\"data\":\"返回成功\"}";
 		return data;

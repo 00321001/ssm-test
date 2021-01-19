@@ -1,27 +1,20 @@
 package com.javen.controller;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.javan.util.JsonUtil;
 import com.javen.model.Admin;
 import com.javen.service.IAdminService;
 
 @Controller // 返回指定页面 ajax 不能接受到页面的返回 ，所以说
 @RequestMapping("/admin")
 public class AdminController {
-	private static Logger log = LoggerFactory.getLogger(AdminController.class);
-
 	@Resource
 	private IAdminService adminService;
 	

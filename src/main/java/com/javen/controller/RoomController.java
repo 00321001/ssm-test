@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.javan.util.JsonUtil;
-import com.javan.util.ObjtoLayJson;
 import com.javen.model.Room;
-import com.javen.model.User;
 import com.javen.service.IRoomService;
 
 @Controller  //返回指定页面  ajax 不能接受到页面的返回 ，所以说
