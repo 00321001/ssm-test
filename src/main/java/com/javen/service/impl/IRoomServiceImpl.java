@@ -83,7 +83,7 @@ public class IRoomServiceImpl implements IRoomService{
 				map.put("roomTime", roomTime);
 				map.put("userName", user.getUserName());
 				map.put("phoneNumber", user.getPhoneNumber());
-				map.put("idcard", user.getUserName());
+				map.put("idcard", user.getIdCard());
 				map.put("endTime", endTimeStr);
 				System.out.println(this.roomDao.bookRoom(map));
 			}else {
